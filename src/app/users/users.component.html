@@ -1,0 +1,12 @@
+<div class="search-container column">
+  <mat-form-field class="search-box">
+    <input matInput placeholder="Szukaj" [formControl]="term">
+  </mat-form-field>
+  <perfect-scrollbar class="stretch">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let user of users$ | async">
+        {{user.name}}
+      </mat-list-item>
+    </mat-nav-list>
+  </perfect-scrollbar>
+</div>

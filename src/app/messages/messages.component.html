@@ -1,0 +1,19 @@
+<div class="column">
+    <perfect-scrollbar class="stretch">
+    <mat-list>
+      <mat-list-item *ngFor="let message of messages$ | async">
+        <div mat-line>
+          <b>{{message.user}}</b>
+          <span class="message-date">{{message.date | date: 'hh:mm:ss dd/MM/yyyy'}}</span>
+        </div>
+        <div mat-line class="message-content">{{message.content}}</div>
+      </mat-list-item>
+    </mat-list>
+  </perfect-scrollbar>
+  <form class="row message-form">
+    <mat-form-field class="stretch message-box">
+      <input matInput placeholder="Wpisz wiadomość" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="message-button">Wyślij</button>
+  </form>
+</div>

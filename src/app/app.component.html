@@ -1,41 +1,16 @@
-<div class="app-container">
+<div class="column">
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidebarOpened = !sidebarOpened">
       <mat-icon>menu</mat-icon>
     </button>
     Czatek
   </mat-toolbar>
-  <mat-sidenav-container class="full-height">
-    <mat-sidenav mode="side" [(opened)]="sidebarOpened" class="sidebar-nav">
-      <mat-form-field class="search-box">
-        <input matInput placeholder="Szukaj">
-      </mat-form-field>
-      <perfect-scrollbar class="full-height">
-        <mat-nav-list>
-          <mat-list-item *ngFor="let user of users">
-            {{user.name}}
-          </mat-list-item>
-        </mat-nav-list>
-      </perfect-scrollbar>
+  <mat-sidenav-container class="stretch">
+    <mat-sidenav mode="side" [(opened)]="sidebarOpened">
+      <app-users></app-users>
     </mat-sidenav>
-    <mat-sidenav-content class="message-container">
-      <perfect-scrollbar class="full-height">
-        <mat-list>
-          <mat-list-item *ngFor="let message of messages">
-            <div mat-line>
-              <b>{{message.user}}</b>
-              <span class="message-date">{{message.date | date: 'hh:mm:ss dd/MM/yyyy'}}</span>
-            </div>
-            <div mat-line class="message-content">{{message.content}}</div>
-          </mat-list-item>
-        </mat-list>
-      </perfect-scrollbar>
-      <form class="message-form">
-        <mat-form-field class="message-box">
-          <input matInput placeholder="Wpisz wiadomość" required>
-        </mat-form-field>
-        <button mat-raised-button color="primary" class="message-button">Wyślij</button>
-      </form>
+    <mat-sidenav-content>
+      <app-messages></app-messages>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

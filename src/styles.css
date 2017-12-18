@@ -6,3 +6,20 @@ html,
 body {
   height: 100%;
 }
+
+.column {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+}
+
+.row {
+  width: 100%;
+  display: flex !important;
+  flex-direction: row;
+}
+
+.stretch {
+  flex: 1;
+  overflow: hidden !important;
+}
