@@ -1,6 +1,9 @@
 export class Message {
-  channel: string | null;
-  user: string;
+  from: {
+    id: string;
+    name: string;
+  };
+  to: string;
   content: string;
   date: Date;
 }

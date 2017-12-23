@@ -1,92 +1,25 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs/observable/of';
+import { filter } from 'rxjs/operators';
 import { User } from './user';
+import { WebsocketService } from '../websocket.service';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    },
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    },
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    },
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    },
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    },
-    {
-      email: 'tomek@janas.tk',
-      name: 'tomek'
-    },
-    {
-      email: 'ola@janas.tk',
-      name: 'ola'
-    },
-    {
-      email: 'gryzia@janas.tk',
-      name: 'gryzia'
-    }
-  ];
+  readonly users$ = this.ws.listen<User[]>('users');
 
-  constructor() {}
+  constructor(private ws: WebsocketService) {
+    this.ws.connected$.pipe(
+      filter(c => c)
+    ).subscribe(_ => this.ws.send('getUsers'));
+  }
 
-  searchUsers(_term: string) {
+  searchUsers(users: User[], _term: string) {
     const term = _term.trim().toLowerCase();
     if (!term) {
-      return of(this.users);
+      return users;
     }
 
-    return of(this.users.filter(u => u.name.toLowerCase().includes(term)));
+    return users.filter(u => u.name.toLowerCase().includes(term));
   }
 }

@@ -7,3 +7,7 @@
   max-width: 280px;
   padding: 10px;
 }
+
+.selected {
+  background-color: rgba(0, 0, 0, 0.084);
+}

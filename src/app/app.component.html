@@ -1,16 +1,22 @@
 <div class="column">
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="sidebarOpened = !sidebarOpened">
-      <mat-icon>menu</mat-icon>
-    </button>
-    Czatek
+    <div class="stretch">
+      <button mat-icon-button (click)="sidebarOpened = !sidebarOpened">
+        <mat-icon>menu</mat-icon>
+      </button>
+      Czatek
+    </div>
+    <app-auth></app-auth>
   </mat-toolbar>
   <mat-sidenav-container class="stretch">
-    <mat-sidenav mode="side" [(opened)]="sidebarOpened">
+    <mat-sidenav [mode]="sidebarMode" [(opened)]="sidebarOpened">
       <app-users></app-users>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-messages></app-messages>
+      <app-messages *ngIf="authService.isAuthenticated()"></app-messages>
+      <div class="login-info" *ngIf="!authService.isAuthenticated()">
+        <div class="mat-headline">Zaloguj się aby korzystać z aplikacji</div>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

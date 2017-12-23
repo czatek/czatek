@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   sidebarOpened = true;
+  sidebarMode = 'side';
 
-  auth = {
-    id: 1,
-    email: 'tomek@janas.tk',
-    name: 'tomek'
-  };
+  constructor (public authService: AuthService, private breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe([
+      Breakpoints.HandsetLandscape,
+      Breakpoints.HandsetPortrait
+    ]).subscribe(result => {
+      this.sidebarOpened = !result.matches;
+      this.sidebarMode = result.matches ? 'over' : 'side';
+    });
+  }
 }

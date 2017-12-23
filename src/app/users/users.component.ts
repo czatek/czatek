@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
 import {
-  startWith, debounceTime, distinctUntilChanged, switchMap
+  startWith, debounceTime, distinctUntilChanged, map, combineLatest
 } from 'rxjs/operators';
 
 import { User } from './user';
 import { UsersService } from './users.service';
+import { MessagesService } from '../messages/messages.service';
 
 @Component({
   selector: 'app-users',
@@ -16,15 +17,23 @@ import { UsersService } from './users.service';
 export class UsersComponent implements OnInit {
   users$: Observable<User[]>;
   term = new FormControl();
+  selectedChannel = '';
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private messagesService: MessagesService) { }
 
   ngOnInit() {
-    this.users$ = this.term.valueChanges.pipe(
+    const term$ = this.term.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(term => this.usersService.searchUsers(term)),
     );
+    this.users$ = this.usersService.users$.pipe(
+      combineLatest(term$, (users, term) => this.usersService.searchUsers(users, term)),
+    );
+  }
+
+  changeChannel(channel: string) {
+    this.selectedChannel = channel;
+    this.messagesService.changeChannel(channel);
   }
 }

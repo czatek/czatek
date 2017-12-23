@@ -1,10 +1,15 @@
 <div class="search-container column">
+  <mat-nav-list>
+    <mat-list-item [class.selected]="selectedChannel === ''" (click)="changeChannel('')">
+      Wszyscy
+    </mat-list-item>
+  </mat-nav-list>
   <mat-form-field class="search-box">
     <input matInput placeholder="Szukaj" [formControl]="term">
   </mat-form-field>
   <perfect-scrollbar class="stretch">
     <mat-nav-list>
-      <mat-list-item *ngFor="let user of users$ | async">
+      <mat-list-item [class.selected]="selectedChannel === user.id" *ngFor="let user of users$ | async" (click)="changeChannel(user.id)">
         {{user.name}}
       </mat-list-item>
     </mat-nav-list>
