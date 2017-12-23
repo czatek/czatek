@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WebsocketService } from '../websocket.service';
 import { filter } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     this.ws.connected$.pipe(
       filter(c => c)
     ).subscribe(_ => this.ws.send('getUserId'));
-    this.ws.listen<string>('userId').subscribe(id => this.userId = id);
+    this.ws.listen<string>('userId').subscribe(id => this.setUser(id));
   }
 
   public isAuthenticated() {
@@ -28,16 +29,35 @@ export class AuthService {
       return;
     }
 
+    await this.gapiLoaded();
     await new Promise(resolve => gapi.load('auth2', resolve));
     gapi.auth2.init({
-      client_id: '977466048676-r6pf13bs4qi689g39arlmf23hbot7loe.apps.googleusercontent.com',
+      client_id: environment.googleClientId,
       scope: 'profile'
     });
     this.googleAuthReady = true;
   }
 
   public async login(googleUser: any) {
+    this.userId = localStorage.getItem('userId');
     const token = googleUser.getAuthResponse().id_token;
     this.ws.connect(token);
+  }
+
+  private setUser(id) {
+    this.userId = id;
+    localStorage.setItem('userId', id);
+  }
+
+  private gapiLoaded() {
+    return new Promise<any>(resolve => {
+      window.onGapiReady = () => {
+        delete window.onGapiReady;
+        resolve();
+      };
+      if (window.gapiLoaded) {
+        window.onGapiReady();
+      }
+    });
   }
 }

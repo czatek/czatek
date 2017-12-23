@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class MessagesService {
-  private channel = new BehaviorSubject('');
+  private channel = new BehaviorSubject<string>(null);
   readonly messages$ = this.ws.listen<Message[]>('messages').pipe(
     scan((result, messages) => result.concat(messages), []),
     combineLatest(this.channel,

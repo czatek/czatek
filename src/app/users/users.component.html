@@ -1,6 +1,6 @@
 <div class="search-container column">
   <mat-nav-list>
-    <mat-list-item [class.selected]="selectedChannel === ''" (click)="changeChannel('')">
+    <mat-list-item [class.selected]="!selectedChannel" (click)="changeChannel(null)">
       Wszyscy
     </mat-list-item>
   </mat-nav-list>
