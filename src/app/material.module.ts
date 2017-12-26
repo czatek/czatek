@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
-import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   exports: [
@@ -15,7 +14,6 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatButtonModule,
     MatListModule,
     MatInputModule,
-    LayoutModule
   ]
 })
 export class MaterialModule {}

@@ -8,4 +8,5 @@ interface NodeModule {
 interface Window {
   onGapiReady: any;
   gapiLoaded: boolean;
+  ipcRenderer: any;
 }

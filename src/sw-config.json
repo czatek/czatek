@@ -1,0 +1,9 @@
+{
+  "root": "dist",
+  "staticFileGlobs": [
+    "dist/index.html",
+    "dist/**.bundle.*",
+    "dist/assets/**.*"
+  ],
+  "stripPrefix": "dist/"
+}

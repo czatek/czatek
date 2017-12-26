@@ -5,18 +5,20 @@ client_max_body_size 75M;
 add_header X-Frame-Options DENY;
 add_header X-Content-Type-Options nosniff;
 add_header X-XSS-Protection "1; mode=block";
-add_header Referrer-Policy strict-origin-when-cross-origin;
-add_header Content-Security-Policy "script-src 'self' https://apis.google.com https://ssl.gstatic.com; img-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://accounts.google.com; connect-src *; manifest-src 'self'; default-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';";
+add_header Referrer-Policy no-referrer;
+add_header Content-Security-Policy "script-src 'self' https://apis.google.com https://ssl.gstatic.com; img-src 'self' http://csi.gstatic.com https://csi.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://accounts.google.com; connect-src *; manifest-src 'self'; media-src 'self'; worker-src 'self'; default-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';";
 
-location = /ngsw-worker.js {
-  expires -1;
+location /service-worker.js {
+	add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+	expires off;
 }
 
 location ~* \.(?:html|xml|json)$ {
-  expires -1;
+	add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+	expires off;
 }
 
-location ~* \.(?:css|js|png|svg|ico)$ {
+location ~* \.(?:css|js|png|svg|ico|mp3)$ {
   expires 1y;
   access_log off;
   add_header Cache-Control "public";

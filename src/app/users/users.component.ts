@@ -8,6 +8,7 @@ import {
 import { User } from './user';
 import { UsersService } from './users.service';
 import { MessagesService } from '../messages/messages.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +20,7 @@ export class UsersComponent implements OnInit {
   term = new FormControl();
   selectedChannel = '';
 
-  constructor(private usersService: UsersService, private messagesService: MessagesService) { }
+  constructor(private usersService: UsersService, private messagesService: MessagesService, private appComponent: AppComponent) { }
 
   ngOnInit() {
     const term$ = this.term.valueChanges.pipe(
@@ -33,6 +34,7 @@ export class UsersComponent implements OnInit {
   }
 
   changeChannel(channel: string) {
+    this.appComponent.closeSidenavOnMobile();
     this.selectedChannel = channel;
     this.messagesService.changeChannel(channel);
   }

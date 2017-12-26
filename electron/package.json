@@ -2,7 +2,7 @@
   "name": "czatek-desktop",
   "version": "0.0.0",
   "description": "Komunikator internetowy",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "build -wl"
@@ -12,7 +12,8 @@
   "build": {
     "appId": "czatek",
     "files": [
-      "index.js",
+      "main.js",
+      "renderer.js",
       "build"
     ],
     "linux": {

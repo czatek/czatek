@@ -1,7 +1,7 @@
 <div class="column">
   <mat-toolbar color="primary">
     <div class="stretch">
-      <button mat-icon-button (click)="sidebarOpened = !sidebarOpened">
+      <button mat-icon-button (click)="toggleSidebar()">
         <mat-icon>menu</mat-icon>
       </button>
       Czatek
@@ -9,7 +9,7 @@
     <app-auth></app-auth>
   </mat-toolbar>
   <mat-sidenav-container class="stretch">
-    <mat-sidenav [mode]="sidebarMode" [(opened)]="sidebarOpened">
+    <mat-sidenav>
       <app-users></app-users>
     </mat-sidenav>
     <mat-sidenav-content>
