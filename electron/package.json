@@ -1,0 +1,30 @@
+{
+  "name": "czatek-desktop",
+  "version": "0.0.0",
+  "description": "Komunikator internetowy",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "build -wl"
+  },
+  "author": "",
+  "license": "MIT",
+  "build": {
+    "appId": "czatek",
+    "files": [
+      "index.js",
+      "build"
+    ],
+    "linux": {
+      "executableName": "Czatek",
+      "category": "Network",
+      "desktop": {
+        "Name": "Czatek"
+      }
+    }
+  },
+  "devDependencies": {
+    "electron": "^1.7.10",
+    "electron-builder": "^19.49.2"
+  }
+}

@@ -32,6 +32,7 @@ services:
     volumes:
       - "${FRONTEND_SSL_PATH:-./local/certs}:/etc/certs"
       - "${LETSENCRYPT_WELLKNOWN_PATH:-./local/webroot/.well-known}:/usr/src/app/.well-known"
+      - "${RELEASES_PATH:-./local/webroot/releases}:/usr/src/app/releases"
     links:
       - backend
     env_file: .env

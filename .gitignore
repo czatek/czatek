@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/electron/dist
 
 # settings
 /src/environments/environment.*.ts
