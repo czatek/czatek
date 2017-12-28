@@ -1,7 +1,6 @@
-window.onGapiLoaded = () => {
-  window.gapiLoaded = true
+window.onGapiLoaded = function() {
   if (window.onGapiReady) {
-    window.onGapiReady()
+    window.onGapiReady();
   }
 }
 

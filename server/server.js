@@ -27,13 +27,13 @@ io.use(async (socket, next) => {
 io.on('connection', async socket => {
   const { sub: google_id, name } = socket.tokenUser;
   socket.user = await getUpdatedUser(google_id, name);
+  if (!socket.user.id) {
+    return socket.disconnect();
+  }
 
-  socket.broadcast.emit('users', await getUsers());
-  socket.on('getUserId', () => socket.emit('userId', socket.user.id));
-  socket.on('getUsers', async () => socket.emit('users', await getUsers()));
-  socket.on('getMessages', async () =>
-    socket.emit('messages', await getMessages(socket.user.id))
-  );
+  socket.emit('userId', socket.user.id);
+  io.sockets.emit('users', await getUsers());
+  socket.emit('messages', await getMessages(socket.user.id));
 
   socket.on('message', async data => {
     const message = [await saveMessage(data, socket.user)];
@@ -63,8 +63,12 @@ async function getUpdatedUser(google_id, name) {
   let result = await db('users')
     .where({ google_id })
     .update({ name })
-    .returning(['id', 'name'])
+    .returning(['id', 'name', 'active'])
     .get(0);
+
+  if (result && !result.active) {
+    return {};
+  }
 
   if (!result) {
     result = await db('users')
@@ -75,12 +79,13 @@ async function getUpdatedUser(google_id, name) {
       .returning(['id', 'name'])
       .get(0);
   }
-  return { ...result };
+  return { id: result.id, name: result.name };
 }
 
 async function getUsers() {
   return db('users')
     .select('id', 'name')
+    .where('active', true)
     .orderBy('name');
 }
 

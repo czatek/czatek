@@ -8,11 +8,7 @@ import { WebsocketService } from '../websocket.service';
 export class UsersService {
   readonly users$ = this.ws.listen<User[]>('users');
 
-  constructor(private ws: WebsocketService) {
-    this.ws.connected$.pipe(
-      filter(c => c)
-    ).subscribe(_ => this.ws.send('getUsers'));
-  }
+  constructor(private ws: WebsocketService) {}
 
   searchUsers(users: User[], _term: string) {
     const term = _term.trim().toLowerCase();

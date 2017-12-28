@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import * as io from 'socket.io-client';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { first, switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class WebsocketService {
@@ -34,7 +34,7 @@ export class WebsocketService {
 
   public listen<T>(name: string) {
     return this.connected$.pipe(
-      first(c => c),
+      filter(c => c),
       switchMap(_ => new Observable<T>(observer => {
         this.socket.on(name, data => this.zone.run(() => observer.next(data)));
       }))

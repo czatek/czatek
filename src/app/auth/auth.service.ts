@@ -10,9 +10,6 @@ export class AuthService {
   private googleAuthReady = false;
 
   constructor(private ws: WebsocketService) {
-    this.ws.connected$.pipe(
-      filter(c => c)
-    ).subscribe(_ => this.ws.send('getUserId'));
     this.ws.listen<string>('userId').subscribe(id => this.setUser(id));
   }
 
@@ -55,7 +52,7 @@ export class AuthService {
         delete window.onGapiReady;
         resolve();
       };
-      if (window.gapiLoaded) {
+      if (window.gapi) {
         window.onGapiReady();
       }
     });

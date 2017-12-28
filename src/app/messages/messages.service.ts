@@ -27,9 +27,6 @@ export class MessagesService {
     );
 
   constructor(private ws: WebsocketService, private authService: AuthService) {
-    this.ws.connected$
-      .pipe(filter(c => c))
-      .subscribe(_ => this.ws.send('getMessages'));
     Notification.requestPermission().then(
       result => (this.notificationsAllowed = result === 'granted')
     );

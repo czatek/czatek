@@ -8,7 +8,9 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
+  static readonly BREAKPOINT = 800;
   @ViewChild(MatSidenav) sidenav: MatSidenav;
+  oldWidth = 0;
 
   constructor (public authService: AuthService) {}
 
@@ -21,7 +23,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   public closeSidenavOnMobile() {
-    if (window.innerWidth <= 800) {
+    if (window.innerWidth <= AppComponent.BREAKPOINT) {
       this.sidenav.close();
     }
   }
@@ -32,12 +34,15 @@ export class AppComponent implements AfterViewInit {
   }
 
   private resizeWindow(width) {
-    if (width > 800) {
-      this.sidenav.mode = 'side';
-      this.sidenav.open();
-    } else {
-      this.sidenav.mode = 'over';
-      this.sidenav.close();
+    if (this.oldWidth !== width) {
+      this.oldWidth = width;
+      if (width > AppComponent.BREAKPOINT) {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      } else {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      }
     }
   }
 }

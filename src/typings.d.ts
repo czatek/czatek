@@ -6,7 +6,7 @@ interface NodeModule {
 }
 
 interface Window {
+  gapi: any;
   onGapiReady: any;
-  gapiLoaded: boolean;
   ipcRenderer: any;
 }
